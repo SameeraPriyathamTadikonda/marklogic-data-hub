@@ -14,6 +14,8 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'application'
+    
+
     sourceCompatibility = "9"
     targetCompatibility = "9"
 
@@ -28,7 +30,7 @@ subprojects {
 		testCompile 'org.apache.httpcomponents:httpclient:4.3.5'
     }
 
-    test{
+    tasks.withType(Test){
         testLogging{
             events 'started','passed', 'skipped', 'failed'
             exceptionFormat 'full'

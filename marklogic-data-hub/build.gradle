@@ -8,6 +8,7 @@ plugins {
     id 'org.springframework.boot' version '2.1.3.RELEASE'
     id "io.spring.dependency-management" version "1.0.7.RELEASE"
     id 'com.marklogic.ml-development-tools' version '5.1.0'
+    id "org.gradle.test-retry" version "1.1.2"
 }
 
 mainClassName='com.marklogic.hub.ApplicationConfig'
@@ -368,15 +369,23 @@ test {
     maxHeapSize = "256m"
     exclude 'com/marklogic/bootstrap/**'
     classpath = project.sourceSets.test.runtimeClasspath
+    retry {
+        maxFailures = 20
+        maxRetries = 3
+    }
 }
 
 task testAcceptance(type: Test) {
     useJUnitPlatform  {
-        include 'com/marklogic/hub_unit_test/RunMarkLogicUnitTestsTest*'
-        include 'com/marklogic/hub/**'
+       // include 'com/marklogic/hub_unit_test/RunMarkLogicUnitTestsTest*'
+        include 'com/marklogic/hub/master/**'
         if (!(certAuth || sslRun)){
             include 'com/marklogic/hub/PiiE2E.class'
         }
+    }
+    retry {
+        maxFailures = 20
+        maxRetries = 3
     }
 }
 
