@@ -385,7 +385,7 @@ task testAcceptance(type: Test) {
     }
     retry {
         maxFailures = 20
-        maxRetries = 3
+        maxRetries = 1
     }
 }
 
@@ -398,6 +398,10 @@ task testIntegration(type: Test) {
 task testBootstrap(type: Test) {
     useJUnitPlatform  {
         include 'com/marklogic/bootstrap/**'
+    }
+    retry {
+        maxFailures = 20
+        maxRetries = 1
     }
 }
 
