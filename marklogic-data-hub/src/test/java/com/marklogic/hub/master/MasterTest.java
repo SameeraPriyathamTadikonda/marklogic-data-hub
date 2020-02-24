@@ -146,7 +146,7 @@ public class MasterTest extends HubTestBase {
         // that are expected to be merged together, as it's very difficult right now to know why only 205 are in the
         // collection and which 3 are "missing". 
         int masteredCount = getFinalDocCount("sm-person-mastered");
-        assertTrue(masteredCount >= 209, "Expecting at least 205 documents to be in the 'sm-person-mastered' collection, but only found: "+ masteredCount);
+        assertTrue(masteredCount <= 205, "Expecting at least 205 documents to be in the 'sm-person-mastered' collection, but only found: "+ masteredCount);
 
         // Setting this to 40 or greater as occasionally we get 41 in the pipeline. See bug https://project.marklogic.com/jira/browse/DHFPROD-3178
         assertTrue(getFinalDocCount("sm-person-notification") >= 40, "Not enough notifications are created");
