@@ -385,7 +385,7 @@ task testAcceptance(type: Test) {
     }
     retry {
         maxFailures = 20
-        maxRetries = 1
+        maxRetries = 5
     }
 }
 
