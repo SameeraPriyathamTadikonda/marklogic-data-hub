@@ -89,8 +89,8 @@ public abstract class AbstractHubTest extends TestObject {
         if (projectDir != null && projectDir.exists()) {
             try {
                 FileUtils.deleteDirectory(projectDir);
-            } catch (IOException ex) {
-                logger.warn("Unable to delete the project directory", ex);
+            } catch (Exception ex) {
+                logger.warn("Unable to delete the project directory: " + ex.getMessage());
             }
         }
     }
