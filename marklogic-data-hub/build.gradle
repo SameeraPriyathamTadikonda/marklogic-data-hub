@@ -391,6 +391,7 @@ def props = new Properties()
 propFile.withInputStream { props.load(it) }
 
 task bootstrap(type: JavaExec) {
+    systemProperty "hubTestHosts", hubTestHosts
     classpath = sourceSets.test.runtimeClasspath
     main = 'com.marklogic.bootstrap.Installer'
 }
