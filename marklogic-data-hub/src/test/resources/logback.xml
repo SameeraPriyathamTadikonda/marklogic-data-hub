@@ -8,11 +8,23 @@
     </encoder>
   </appender>
 
-  <root level="WARN">
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
 
+  <logger name="org.springframework" level="WARN" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <logger name="com.marklogic.client" level="WARN" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
   <logger name="org.apache.http" level="WARN" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <logger name="com.marklogic.appdeployer" level="WARN" additivity="false">
     <appender-ref ref="STDOUT" />
   </logger>
 
@@ -25,11 +37,16 @@
     <appender-ref ref="STDOUT" />
   </logger>
 
-  <!-- Helps verifies that test modules are loaded correctly -->
+  <!-- Helps verifies that test modules are loaded correctly
   <logger name="com.marklogic.client.ext" level="INFO" additivity="false">
     <appender-ref ref="STDOUT" />
   </logger>
+  -->
+
   <logger name="com.marklogic.hub_unit_test" level="INFO" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+  <logger name="com.marklogic.hub.test" level="INFO" additivity="false">
     <appender-ref ref="STDOUT" />
   </logger>
 

@@ -30,8 +30,10 @@ public class DeployEntityIndexesTest extends AbstractHubCoreTest {
         HubConfig hubConfig = getHubConfig();
 
         // Reset the path range indexes on final and staging
+        logger.warn("SAVING DATABASE; manage config: " + hubConfig.getManageClient().getManageConfig());
+        final API api = new API(hubConfig.getManageClient());
         Stream.of(DatabaseKind.STAGING, DatabaseKind.FINAL).forEach(databaseKind -> {
-            Database db = new Database(new API(hubConfig.getManageClient()), hubConfig.getDbName(databaseKind));
+            Database db = new Database(api, hubConfig.getDbName(databaseKind));
             db.setRangePathIndex(new ArrayList<>());
             db.save();
         });
@@ -72,7 +74,7 @@ public class DeployEntityIndexesTest extends AbstractHubCoreTest {
                 assertEquals(2, indexes.size());
             } else {
                 assertEquals(4, indexes.size(), "Expecting the Person/personId, Person/name indexes and " +
-                        "then two path range indexes that are added to Final for mastering purposes");
+                    "then two path range indexes that are added to Final for mastering purposes");
             }
             assertEquals("/(es:envelope|envelope)/(es:instance|instance)/Person/personId", indexes.get(0).get("path-expression").asText());
             assertEquals("/(es:envelope|envelope)/(es:instance|instance)/Person/name", indexes.get(1).get("path-expression").asText());
