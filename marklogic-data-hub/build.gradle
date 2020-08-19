@@ -396,6 +396,7 @@ task bootstrap(type: JavaExec) {
     systemProperty "hubTestHosts", hubTestHosts
 }
 
+
 test {
     systemProperty "hubTestHosts", hubTestHosts
     useJUnitPlatform()
@@ -408,10 +409,8 @@ test {
 task testAcceptance(type: Test) {
     systemProperty "hubTestHosts", hubTestHosts
     useJUnitPlatform  {
-        //include 'com/marklogic/hub_unit_test/RunMarkLogicUnitTestsTest*'
-        //include 'com/marklogic/hub/**'
-        include 'com/marklogic/hub/dataservices/**'
-        include 'com/marklogic/hub/dhs/**'
+        include 'com/marklogic/hub_unit_test/RunMarkLogicUnitTestsTest*'
+        include 'com/marklogic/hub/**'
         if (!(certAuth || sslRun)){
             include 'com/marklogic/hub/PiiE2E.class'
         }
