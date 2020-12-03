@@ -26,6 +26,10 @@ class GenerateTDETemplateFromEntityTask extends HubTask {
     @Input
     public String entityNames
 
+    String getEntityNames() {
+        return entityNames
+    }
+
     @TaskAction
     void generateTDETEmplates() {
         def cmd = new GenerateHubTDETemplateCommand(getHubConfig())

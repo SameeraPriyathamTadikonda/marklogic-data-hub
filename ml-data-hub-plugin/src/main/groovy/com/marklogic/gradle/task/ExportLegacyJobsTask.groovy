@@ -25,6 +25,10 @@ class ExportLegacyJobsTask extends HubTask {
     public String[] jobIds
     public String filename
 
+    String[] getJobIds() {
+        return jobIds
+    }
+
     @TaskAction
     void exportJobs() {
         if (filename == null) {

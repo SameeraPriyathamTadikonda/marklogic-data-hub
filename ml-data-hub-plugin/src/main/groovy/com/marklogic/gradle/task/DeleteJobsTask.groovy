@@ -27,6 +27,10 @@ class DeleteJobsTask extends HubTask {
     @Input
     public String jobIds
 
+    String getJobIds() {
+        return jobIds
+    }
+
     @TaskAction
     void deleteJobs() {
         if (jobIds == null) {

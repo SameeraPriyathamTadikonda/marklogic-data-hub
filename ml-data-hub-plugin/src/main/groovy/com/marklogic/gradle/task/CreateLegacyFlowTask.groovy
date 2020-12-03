@@ -29,7 +29,9 @@ abstract class CreateLegacyFlowTask extends HubTask {
 
     @Input
     public Boolean useES
-
+    Boolean getUseES() {
+        return useES
+    }
 
     void createFlow(FlowType flowType) {
         def entityName = project.hasProperty("entityName") ? project.property("entityName") : null

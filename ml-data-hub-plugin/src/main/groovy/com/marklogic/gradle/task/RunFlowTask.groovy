@@ -60,8 +60,53 @@ class RunFlowTask extends HubTask {
     @Input
     public List<String> steps
 
+    String getFlowName() {
+        return flowName
+    }
+
+    Integer getBatchSize() {
+        return batchSize
+    }
+
+    Integer getThreadCount() {
+        return threadCount
+    }
+
+    String getInputFilePath() {
+        return inputFilePath
+    }
+
+    String getInputFileType() {
+        return inputFileType
+    }
+
+    String getOutputURIReplacement() {
+        return outputURIReplacement
+    }
+
+    String getSeparator() {
+        return separator
+    }
+
+    Boolean getShowOptions() {
+        return showOptions
+    }
+
+    Boolean getFailHard() {
+        return failHard
+    }
+
+    List<String> getSteps() {
+        return steps
+    }
+
+    String getJobId() {
+        return jobId
+    }
     @Input
     public String jobId
+
+
 
     @TaskAction
     void runFlow() {

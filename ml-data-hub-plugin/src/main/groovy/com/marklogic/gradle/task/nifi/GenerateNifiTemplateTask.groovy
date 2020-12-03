@@ -15,6 +15,14 @@ class GenerateNifiTemplateTask extends HubTask {
     @Input
     public String templatePath
 
+    String getFlowUri() {
+        return flowUri
+    }
+
+    String getTemplatePath() {
+        return templatePath
+    }
+
     @TaskAction
     void generateNifiTemplate() {
         if (flowUri == null) {
