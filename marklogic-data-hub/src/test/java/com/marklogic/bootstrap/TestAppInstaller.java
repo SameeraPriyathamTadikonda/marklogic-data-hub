@@ -60,8 +60,15 @@ public class TestAppInstaller {
             taskExecutor.setAwaitTerminationSeconds(600);
             taskExecutor.shutdown();
             logger.info("Finished installing test app on hosts: " + Arrays.asList(hosts));
+            logger.info("After installing test apps");
+        } catch(Exception e) {
+            e.printStackTrace();
         } finally {
+            logger.info("Inside Finally");
+            System.out.println("Inside Finally");
             ctx.close();
+            logger.info("After Ctx is closed");
+            System.out.println("After Ctx is closed");
         }
     }
 
