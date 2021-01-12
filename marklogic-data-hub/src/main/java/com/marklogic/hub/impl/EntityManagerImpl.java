@@ -87,22 +87,23 @@ public class EntityManagerImpl extends LoggingObject implements EntityManager {
             File expFinalFile = Paths.get(dir.toString(), HubConfig.EXP_FINAL_ENTITY_QUERY_OPTIONS_FILE).toFile();
 
             List<JsonNode> entities = getAllEntities();
-            String options = generator.generateOptions(entities, false);
-            if (options != null) {
-                FileUtils.writeStringToFile(stagingFile, options);
-                logger.info("Wrote entity-specific search options to: " + stagingFile.getAbsolutePath());
-                FileUtils.writeStringToFile(finalFile, options);
-                logger.info("Wrote entity-specific search options to: " + finalFile.getAbsolutePath());
+            if(entities.size() > 0) {
+                String options = generator.generateOptions(entities, false);
+                if (options != null) {
+                    FileUtils.writeStringToFile(stagingFile, options);
+                    logger.info("Wrote entity-specific search options to: " + stagingFile.getAbsolutePath());
+                    FileUtils.writeStringToFile(finalFile, options);
+                    logger.info("Wrote entity-specific search options to: " + finalFile.getAbsolutePath());
+                }
+                String expOptions = generator.generateOptions(entities, true);
+                if (expOptions != null) {
+                    FileUtils.writeStringToFile(expStagingFile, expOptions);
+                    logger.info("Wrote entity-specific search options for Explorer to: " + stagingFile.getAbsolutePath());
+                    FileUtils.writeStringToFile(expFinalFile, expOptions);
+                    logger.info("Wrote entity-specific search options for Explorer to: " + finalFile.getAbsolutePath());
+                }
+                return true;
             }
-            String expOptions = generator.generateOptions(entities, true);
-            if (expOptions != null) {
-                FileUtils.writeStringToFile(expStagingFile, expOptions);
-                logger.info("Wrote entity-specific search options for Explorer to: " + stagingFile.getAbsolutePath());
-                FileUtils.writeStringToFile(expFinalFile, expOptions);
-                logger.info("Wrote entity-specific search options for Explorer to: " + finalFile.getAbsolutePath());
-            }
-            return true;
-
         } catch (IOException e) {
             logger.warn("Unable to generate search options, cause: " + e.getMessage(), e);
         }
