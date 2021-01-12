@@ -421,11 +421,13 @@ ext {
 
 task bootstrap(type: JavaExec) {
     println 'Starting bootstrap task'
+    project.logger.info('Starting bootstrap task')
     description = "Install the test application - an instance of DHF - so that the tests can be run against it"
     classpath = sourceSets.test.runtimeClasspath
     main = 'com.marklogic.bootstrap.TestAppInstaller'
     systemProperty "mlHost", mlHost
     println 'completed bootstrap task'
+    project.logger.info('completed bootstrap task')
 }
 bootstrap.dependsOn extractFastXmlParserZip
 bootstrap.finalizedBy mlPrepareBundles // ensures that marklogic-unit-test is downloaded
