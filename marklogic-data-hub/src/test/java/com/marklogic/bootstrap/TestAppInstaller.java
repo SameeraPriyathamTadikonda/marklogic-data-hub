@@ -44,11 +44,11 @@ public class TestAppInstaller {
         SpringApplication app = new SpringApplication(HubCoreTestConfig.class);
         app.setWebApplicationType(WebApplicationType.NONE);
         ConfigurableApplicationContext ctx = app.run();
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         try {
             HubConfigObjectFactory factory = ctx.getBean(HubConfigInterceptor.class).getHubConfigObjectFactory();
             String[] hosts = factory.getHosts();
             logger.info("Will install test app on hosts: " + Arrays.asList(hosts));
-            ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
             taskExecutor.setCorePoolSize(hosts.length);
             taskExecutor.setMaxPoolSize(hosts.length);
             taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
@@ -58,9 +58,10 @@ public class TestAppInstaller {
             }
             // Installation should normally just take a couple minutes
             taskExecutor.setAwaitTerminationSeconds(600);
+            taskExecutor.setWaitForTasksToCompleteOnShutdown(false);
             taskExecutor.shutdown();
+            logger.info("Active threads: " + taskExecutor.getActiveCount());
             logger.info("Finished installing test app on hosts: " + Arrays.asList(hosts));
-            logger.info("After installing test apps");
         } catch(Exception e) {
             e.printStackTrace();
         } finally {

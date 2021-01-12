@@ -87,27 +87,26 @@ public class EntityManagerImpl extends LoggingObject implements EntityManager {
             File expFinalFile = Paths.get(dir.toString(), HubConfig.EXP_FINAL_ENTITY_QUERY_OPTIONS_FILE).toFile();
 
             List<JsonNode> entities = getAllEntities();
-            if(entities.size() > 0) {
-                String options = generator.generateOptions(entities, false);
-                if (options != null) {
-                    FileUtils.writeStringToFile(stagingFile, options);
-                    logger.info("Wrote entity-specific search options to: " + stagingFile.getAbsolutePath());
-                    FileUtils.writeStringToFile(finalFile, options);
-                    logger.info("Wrote entity-specific search options to: " + finalFile.getAbsolutePath());
-                }
-                String expOptions = generator.generateOptions(entities, true);
-                if (expOptions != null) {
-                    FileUtils.writeStringToFile(expStagingFile, expOptions);
-                    logger.info("Wrote entity-specific search options for Explorer to: " + stagingFile.getAbsolutePath());
-                    FileUtils.writeStringToFile(expFinalFile, expOptions);
-                    logger.info("Wrote entity-specific search options for Explorer to: " + finalFile.getAbsolutePath());
-                }
-                return true;
+            String options = generator.generateOptions(entities, false);
+            if (options != null) {
+                FileUtils.writeStringToFile(stagingFile, options);
+                logger.info("Wrote entity-specific search options to: " + stagingFile.getAbsolutePath() + " to host: " + hubConfig.getHost());
+                FileUtils.writeStringToFile(finalFile, options);
+                logger.info("Wrote entity-specific search options to: " + finalFile.getAbsolutePath() + " to host: " + hubConfig.getHost());
+            }
+            String expOptions = generator.generateOptions(entities, true);
+            logger.info(String.format("expOptions String %s -- in host %s:", expOptions, hubConfig.getHost()));
+            if (expOptions != null) {
+                FileUtils.writeStringToFile(expStagingFile, expOptions);
+                logger.info("Wrote entity-specific search options for Explorer to: " + stagingFile.getAbsolutePath() + " to host: " + hubConfig.getHost());
+                FileUtils.writeStringToFile(expFinalFile, expOptions);
+                logger.info("Wrote entity-specific search options for Explorer to: " + finalFile.getAbsolutePath() + " to host: " + hubConfig.getHost());
             }
         } catch (IOException e) {
-            logger.warn("Unable to generate search options, cause: " + e.getMessage(), e);
+            logger.info("Unable to generate search options, cause: " + e.getMessage(), e);
+            return false;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -149,7 +148,7 @@ public class EntityManagerImpl extends LoggingObject implements EntityManager {
         }
         modulesLoader.setShutdownTaskExecutorAfterLoadingModules(true);
         modulesLoader.waitForTaskExecutorToFinish();
-
+        logger.info(String.format("In host %s -- printing isLoaded: %s", hubConfig.getHost(), isLoaded));
         return isLoaded;
     }
 
